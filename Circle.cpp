@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 class Circle {
@@ -8,7 +9,7 @@ class Circle {
 
   public:
    
-    Circle(int =0,int=0, double =1.0);
+    Circle(int =0,int=0, double =1.0); //Constructor
     void print() const;
     double area() const;
 
@@ -21,34 +22,32 @@ class Circle {
   friend istream & operator>>(istream &in, Circle &);
 };
 
-Circle::Circle(int x,int y, double r)
+Circle::Circle(int x1,int y1, double r1)
 {
-  // Initialize the object here
+  x = x1;
+  y = y1;
+  r = r1;
 }
 
 double Circle::area() const {
-  // Return the area of a circle  
+  return 3.14*pow(r, 2);
 }
 
 double Circle::operator+(const Circle & c) const
 {
-   // + Return the area of two circles  
-
+  return area()+c.area();
 }
 
 Circle & Circle::operator++()
 {
-  // Increment the radius by 1
-
+  r++;
   return *this;
 }
 
-Circle Circle::operator++(int)
+Circle Circle::operator++(int x)
 {
   Circle temp = *this;
-  
-  //increment the radius by 1
-
+  r++;
   return temp;
 }
 
@@ -56,13 +55,25 @@ ostream & operator<<(ostream &out, const Circle &c)
 {
 
   // print a circle in the out stream (the format is the same as print())
+  out << "Circle =(" << c.x << ","<< c.y << "," << c.r << ")" << endl;
   return out;
 }
 
 istream & operator>>(istream &in, Circle &c)
 {
- 
- // Read a circle information form the in stream
+  // Read a circle information form the in stream
+  int x;
+  int y;
+  double r;
+  
+  cout << "x: ";
+  in >> x;
+  cout << "y: ";
+  in >> y;
+  cout << "z: ";
+  in >> r;
+
+  c = Circle(x, y, r);
 
   return in;
 }
@@ -77,23 +88,23 @@ void Circle::print() const
 
 int main()
 {
-  // Circle a;
-  // Circle b(2,3,3.0);
+  Circle a;
+  Circle b(2,3,3.0);
 
-  // a.print();
-  // b.print();
+  a.print();
+  b.print();
   
-  // cout << "The area a + b is: " << a+b << endl;
-  // ++a;
-  // a.print();
+  cout << "The area a + b is: " << a+b << endl;
+  ++a;
+  a.print();
 
-  // a++;
-  // a.print();
+  a++;
+  a.print();
 
-  // cout << a;
+  cout << a;
 
-  // cin >> a;
-  // cout <<a;
+  cin >> a;
+  cout << a;
 
   return 0;
 
